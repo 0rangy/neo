@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Assignments - {{ classname }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <style>
+    .bottombar {
+      background-color: #333;
+      overflow: hidden;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+      /* Style the links inside the navigation bar */
+    .bottombar a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+      text-align: center;
+    }
+
+    /* Change the color of links on hover */
+    .bottombar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Add a color to the active/current link */
+    .bottombar a.acteeve {
+      background-color: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-danger navbar-dark fixed-top">
+  <a class="navbar-brand" href="#">
+    <img src="/favicon.ico" width="30" height="30" alt="">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/signin">My Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/signin">Classes</a>
+      </li>
+    </ul>
+  </div>  
+</nav>
+  <br>
+  <br>
+  <br>
+
+<div class="bottombar">
+  <a href="/class/{{ classid }}/stream">Stream</a>
+  <a href="/class/{{ classid }}/assignments" class="acteeve">Assignments</a>
+  <a href="/class/{{ classid }}/people">People</a>
+  <a href="/class/{{ classid }}/resources"> Resources </a>
+</div>
+  
+<div class="text-center">
+  <h2>{{ classname }}</h2>
+  <h3>Assignments</h3>
+</div>
+<div class="text-center container">
+  <a class="btn btn-info" href="/class/{{ classid }}/new" style="margin: 20px">
+    New Assignment
+  </a>
+  <a href="/class/{{ classid }}/del" style="margin:20px" class="btn btn-info">
+    Delete Assignment
+  </a>
+</div>
+  <ul class="" id="assignmentslist">
+</ul>
+
+<script>
+  const assignments = {{ assignments|tojson }}
+  //const assignments = '{"assignments":["assignment 1"],"assignment 1":{"description":"Assignment yes","duedate":"2022-10-31", "attachment":"#", "href":"/"}}'
+  const obj = JSON.parse(assignments);
+  assignmentslist = obj.assignments
+  
+  for (let i = 0; i < assignmentslist.length; i++) {
+     const obj2 = obj[assignmentslist[i]];
+     const curdescyes = obj2["description"];
+     const duedate = new Date(obj2["duedate"])
+     const atachlink = obj2["attachment"]
+     var jumbotron = document.createElement("div");
+     jumbotron.className="jumbotron";
+     jumbotron.style.marginRight="50px";
+     jumbotron.style.marginLeft="50px";
+     jumbotron.style.textAlign = "left";
+     var nameofAssignment = document.createElement("h4");
+     var nameofAssignmentText = document.createTextNode(assignmentslist[i]);
+     nameofAssignment.appendChild(nameofAssignmentText)
+     jumbotron.appendChild(nameofAssignment)
+     var desctext = document.createElement("p")
+     var desctextText =document.createTextNode(curdescyes)
+     desctext.appendChild(desctextText)
+     jumbotron.appendChild(desctext)
+     const button = document.createElement("a");
+     button.className = "btn btn-success";
+     const buttonText = document.createTextNode("More Info");
+     button.href = obj2["href"];
+     button.appendChild(buttonText)
+     jumbotron.appendChild(button)
+     const button2 = document.createElement("a");
+     button2.className = "btn btn-success";
+     if(obj2["attachment"] != "#"){
+       const buttonText2 = document.createTextNode("Attachment");
+       button2.href = obj2["attachment"];
+       button2.style.marginLeft = "5px"
+       button2.appendChild(buttonText2)
+       jumbotron.appendChild(button2)
+     }
+     jumbotron.appendChild(document.createElement("br"))
+     jumbotron.appendChild(document.createElement("br"))
+     dueda = document.createTextNode("Due Date: " + duedate.toDateString())
+     jumbotron.appendChild(dueda)
+     var element=document.getElementById("assignmentslist");
+     element.appendChild(jumbotron)
+   }
+</script>

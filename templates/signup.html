@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sign up</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    if({{ alert }} === "1"){
+      alert({{ alertxt }})
+    }
+  </script>
+</head>
+
+<nav class="navbar navbar-expand-md bg-danger navbar-dark">
+  <a class="navbar-brand" href="#">
+    <img src="/favicon.ico" width="30" height="30" alt="">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/signin">My Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/classes">Classes</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br>
+
+<!-- form -->
+<div class="container">
+  <h2>Sign up</h2>
+  <form action="/signup" method = "POST">
+    <label for="user">Username:</label>
+    <input 
+      type="text" 
+      class="form-control" 
+      id="user" placeholder="Enter username" 
+      name="user">
+    
+    <br>
+    <label for="namefull">Full Name:</label>
+    <input 
+      type="text" 
+      class="form-control" 
+      id="namefull" placeholder="Enter name" 
+      name="namefull">
+    <!-- I just formated the form attributes to make it easier to read, i changed nothing-->
+    
+    <br>
+    <label for="pwd">Password:</label>
+    <input 
+      type="password" 
+      class="form-control" 
+      id="pwd" 
+      placeholder="Enter password" 
+      name="pwd">
+    </br>
+
+    <label for="type">Account Type:</label>
+    <select name="type" class="custom-select" id="type">
+      <option value="teacher">Teacher</option>
+      <option value="student">Student</option>
+      <option value="admin">Admin</option>
+    </select>
+  
+  
+  
+    </br></br>
+    <label for="school">School:</label>
+    <select name="school" class="custom-select" id="school">
+      
+    </select>
+    </br></br>    
+
+
+    
+    <label for="email">Recovery Email:</label>
+    <input 
+      type="email" 
+      class="form-control" 
+      id="email" 
+      placeholder="Enter email" 
+      name="email">
+    
+    </br>
+    <label for="bdate">Date of birth:</label>
+    <input 
+      type="date" 
+      class="form-control" 
+      id="bdate" 
+      name="bdate">
+    
+    </br>
+    <!-- I just formated the form attributes to make it easier to read, i changed nothing-->
+    
+    <input type="submit" class="btn btn-primary" value="Sign up">
+  </form>
+  <script>
+    var schools = {{ schools|tojson}}
+    //var schools = ["school 1", "school 2"]
+    for (let i = 0; i < schools.length; i++) {
+     const newOption = document.createElement('option');
+     const optionText = document.createTextNode(schools[i]);
+     newOption.appendChild(optionText);
+     newOption.setAttribute('value',schools[i]);
+     const select = document.getElementById('school'); 
+select.appendChild(newOption);
+   }
+  </script>
+  <br>
+</div>

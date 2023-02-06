@@ -1,0 +1,124 @@
+<html lang="en" name="stream">
+<head>
+  <title>Stream - {{ classname }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <style>
+    .bottombar {
+      background-color: #333;
+      overflow: hidden;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+      /* Style the links inside the navigation bar */
+    .bottombar a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+      text-align: center;
+    }
+
+    /* Change the color of links on hover */
+    .bottombar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Add a color to the active/current link */
+    .bottombar a.acteeve {
+      background-color: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-danger navbar-dark fixed-top">
+  <a class="navbar-brand" href="#">
+    <img src="/favicon.ico" width="30" height="30" alt=""
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/signin">My Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/signin">Classes</a>
+      </li>
+    </ul>
+  </div>
+-</nav>
+  <br>
+  <br>
+  <br>
+<div class="bottombar">
+  <a href="/class/{{ classid }}/stream" class="acteeve">Stream</a>
+  <a href="/class/{{ classid }}/assignments">Assignments</a>
+  <a href="/class/{{ classid }}/people">People</a>
+  <a href="/class/{{ classid }}/resources"> Resources </a>
+</div>
+  
+<div class="text-center">
+  <h2>{{ classname }}</h2>
+  <h3>Stream</h3>
+</div>
+
+  <div id="stream" class="text-center containter-fluid container">
+    
+  </div>
+
+<script>
+  const stream = {{ stream|tojson }}
+  //stream = '{"announcements":["TEST ON NEVER","Hello there","ok then"],"description":["Hello there will never be a test yes becuase i am tired of tests so yeas anywasy yeah this is it.","ok then hats great"],"destinations":["destination"]}'
+  const obj = JSON.parse(stream);
+  const announcements = obj.announcements;
+  const destlist = obj.destinations;
+  const descs = obj.description;
+  for (let i = 0; i < announcements.length; i++) {
+     var jumbotron = document.createElement("div");
+     jumbotron.className="jumbotron";
+     jumbotron.style.marginRight="50px";
+     jumbotron.style.marginLeft="50px";
+     jumbotron.style.textAlign = "left"
+     var title = document.createElement("h4")
+     var text1 = document.createTextNode(announcements[i]);
+     title.appendChild(text1);
+     var paragraph = document.createElement("p")
+     var text2 = document.createTextNode(descs[i]);
+     paragraph.appendChild(text2);
+     var button = document.createElement("a")
+     button.style.textAlign="right"
+     button.className = "btn btn-success"
+     var text3 = document.createTextNode("More Info");
+     button.appendChild(text3)
+     button.href = destlist[i]
+     var element=document.getElementById("stream");
+     jumbotron.appendChild(title);
+     jumbotron.appendChild(paragraph);
+     jumbotron.appendChild(button);
+     element.appendChild(jumbotron);
+  }
+</script>
+</body>
+</html>
+<html name="people">
+<head>
+  <title>People</title>
+</head>
+</html>

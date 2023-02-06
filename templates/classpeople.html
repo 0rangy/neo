@@ -1,0 +1,101 @@
+<html lang="en">
+<head>
+  <title>People - {{ classname }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <style>
+    .bottombar {
+      background-color: #333;
+      overflow: hidden;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+      /* Style the links inside the navigation bar */
+    .bottombar a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+      text-align: center;
+    }
+
+    /* Change the color of links on hover */
+    .bottombar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Add a color to the active/current link */
+    .bottombar a.acteeve {
+      background-color: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-danger navbar-dark fixed-top">
+  <a class="navbar-brand" href="#">
+    <img src="/favicon.ico" width="30" height="30" alt="">
+      </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/signin">My Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/signin">Classes</a>
+      </li>
+    </ul>
+  </div>  
+</nav>
+  <br>
+  <br>
+  <br>
+
+<div class="bottombar">
+  <a href="/class/{{ classid }}/stream">Stream</a>
+  <a href="/class/{{ classid }}/assignments">Assignments</a>
+  <a href="/class/{{ classid }}/people" class="acteeve">People</a>
+  <a href="/class/{{ classid }}/resources"> Resources </a>
+</div>
+  
+<div class="text-center">
+  <h2>{{ classname }}</h2>
+  <h3>People</h3>
+</div>
+
+  <ul class="list-group" id="peoplelist">
+</ul>
+
+<script>
+  const people = {{ students|tojson }}
+  //const people = ["Person 1", "Person 2"]
+  for (let i = 0; i < people.length; i++) {
+     var jumbotron = document.createElement("li");
+     jumbotron.className="list-group-item";
+     jumbotron.style.marginRight="50px";
+     jumbotron.style.marginLeft="50px";
+     jumbotron.style.textAlign = "left";
+     jumbotron.style.fontWeight = "bold"
+     var nameofPerson = document.createTextNode(people[i]);
+     jumbotron.appendChild(nameofPerson)
+     var element=document.getElementById("peoplelist");
+     element.appendChild(jumbotron)
+   }
+</script>
