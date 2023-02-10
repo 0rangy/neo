@@ -167,13 +167,21 @@ def adminpanel():
         data = json.load(f)
         if data["accountType"] != "admin":
           return flask.redirect("/myaccount")
+        userslist = os.listdir("users")
         classeslist = os.listdir("simulatedDirectories/" + data["school"])
         classeslistnames = []
+        usernames = []
         for clas in classeslist:
           with open("classes/" + clas + ".json") as f:
             clasdata = json.load(f)
             classeslistnames.append(clasdata["name"])
-        return flask.render_template("adminpnl.html", school=data["school"], classeslist=classeslistnames)
+        for user in userslist:
+            print(user)
+            with open("users/" + user, "r+") as f:
+                userdata = json.load(f)
+                if userdata["school"] == data["school"]:
+                    usernames.append(userdata["name"])
+        return flask.render_template("adminpnl.html",userslist=usernames, school=data["school"], classeslist=classeslistnames)
     #except:
      # print("oops")
       #return flask.redirect("/myaccount")
@@ -320,7 +328,7 @@ def newassign(classid):
 
 @app.route("/class/<classid>/assignments")
 def assignmentss(classid):
-  #try:
+  try:
     cookies = flask.request.cookies
     sessionid = cookies.get("sessionID")
     userid = cookies.get("userID")
@@ -335,8 +343,8 @@ def assignmentss(classid):
       return flask.render_template("teacherassign.html", assignments = assignments2, classname = data["name"], classid = classid)
     else:
       return flask.render_template("classassign.html", assignments = assignments2, classname = data["name"], classid = classid)
-  #except:
-   # return flask.redirect("/classes")
+  except:
+    return flask.redirect("/classes")
 
 
 @app.route("/class/<classid>/people")
