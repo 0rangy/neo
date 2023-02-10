@@ -39,6 +39,10 @@
   <div id="classescontainer" class="container">
     <h6>Classes:</h6>
   </div>
+  <div id="userscontainer" class="container">
+	  </br>
+	  <h6>Users:</h6>
+  </div>
   <script>
     let classes = {{ classeslist|tojson }}
     for(let i = 0; i < classes.length; i++){
@@ -49,4 +53,16 @@
       clascontaineryes.appendChild(class1);
       ele.appendChild(clascontaineryes);
     }
+  </script>
+  <script>
+	let users = {{ userslist|tojson }}
+	console.log(users);
+	let usercontainer = document.getElementById("userscontainer");
+	for(let i = 0;i<users.length;i++){
+		let userscontaineryes = document.createElement("div");
+		userscontaineryes.style.marginLeft = "30px";
+		let user1 = document.createTextNode(users[i]);
+		userscontaineryes.appendChild(user1);
+		usercontainer.appendChild(userscontaineryes);
+	}
   </script>
