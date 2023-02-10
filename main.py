@@ -157,7 +157,7 @@ def dele(classid):
 @app.route("/adminpanel", methods=["POST", "GET"])
 def adminpanel():
   if flask.request.method == "GET":
-    #try:
+    try:
       cookies = flask.request.cookies
       sessionid = cookies.get("sessionID")
       userid = cookies.get("userID")
@@ -182,9 +182,9 @@ def adminpanel():
                 if userdata["school"] == data["school"]:
                     usernames.append(userdata["name"])
         return flask.render_template("adminpnl.html",userslist=usernames, school=data["school"], classeslist=classeslistnames)
-    #except:
-     # print("oops")
-      #return flask.redirect("/myaccount")
+    except:
+      print("oops")
+      return flask.redirect("/myaccount")
 
 
 
